@@ -32,7 +32,8 @@ const App = () => {
         frequency_penalty: 0,
         presence_penalty: 0,
       });
-      setResponse(completions.choices[0].text);
+      console.log(completions);
+      setResponse(completions.data.choices[0].text);
     } catch (error) {
       console.log(error);
     }
