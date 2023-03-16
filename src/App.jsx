@@ -1,34 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import { Configuration, OpenAIApi } from "openai";
+import cadenaLogo from './assets/cadenaLogo.png';
 
-function App() {
-  const [count, setCount] = useState(0)
+//open ai config
+const configuration = new Configuration({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+});
+const apiClient = new OpenAIApi(configuration);
+
+
+const App = () => {
+  const [prompt, setPrompt] = useState("");
+  const [response, setResponse] = useState("");
+
+  const handlePromptChange = (event) => {
+    setPrompt(event.target.value);
+  };
+
+  console.log(prompt);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const completions = await apiClient.createCompletion({
+        model: "text-davinci-003",
+        prompt: prompt,
+        max_tokens: 880,
+        temperature: 0.7,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+      setResponse(completions.choices[0].text);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
+    <div className="flex flex-col items-center justify-center">
+      <img src={cadenaLogo} alt="Cadena Logo" className="h-12 mb-10 mt-40" />
+      <form onSubmit={handleSubmit} className="w-full max-w-lg">
+        <div className="flex items-center border-b-2 border-indigo-600 py-2">
+          {
+            //Edit to put create the topic you want to tweet about
+            //edit the promt to take in tweets
 
-export default App
+          }
+          <input
+            className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="text"
+            placeholder="Type your prompt here..."
+            value={prompt}
+            onChange={handlePromptChange}
+          />
+          <button
+            className="flex-shrink-0 bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded"
+            type="submit"
+          >
+            Generate
+          </button>
+        </div>
+      </form>
+      {response && (
+        <div className="w-full max-w-lg mt-4">
+          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <p className="text-gray-700 text-base">{response}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
