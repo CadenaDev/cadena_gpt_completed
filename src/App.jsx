@@ -8,7 +8,6 @@ const configuration = new Configuration({
 });
 const apiClient = new OpenAIApi(configuration);
 
-
 const App = () => {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
