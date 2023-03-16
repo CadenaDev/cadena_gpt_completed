@@ -50,7 +50,7 @@ const App = () => {
           <input
             className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
             type="text"
-            placeholder="Enter the topic you want to tweet about"
+            placeholder="Enter a topic you want to tweet about."
             value={prompt}
             onChange={handlePromptChange}
           />
