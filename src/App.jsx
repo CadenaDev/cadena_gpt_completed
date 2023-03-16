@@ -25,7 +25,7 @@ const App = () => {
     try {
       const completions = await apiClient.createCompletion({
         model: "text-davinci-003",
-        prompt: prompt,
+        prompt: `Make a tweet about: ${prompt} and add emojis to make it more fun.`,
         max_tokens: 880,
         temperature: 0.7,
         top_p: 1,
@@ -46,13 +46,11 @@ const App = () => {
         <div className="flex items-center border-b-2 border-indigo-600 py-2">
           {
             //Edit to put create the topic you want to tweet about
-            //edit the promt to take in tweets
-
           }
           <input
             className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
             type="text"
-            placeholder="Type your prompt here..."
+            placeholder="Enter the topic you want to tweet about"
             value={prompt}
             onChange={handlePromptChange}
           />
