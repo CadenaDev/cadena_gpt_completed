@@ -43,9 +43,6 @@ const App = () => {
       <img src={cadenaLogo} alt="Cadena Logo" className="h-12 mb-10 mt-40" />
       <form onSubmit={handleSubmit} className="w-full max-w-lg">
         <div className="flex items-center border-b-2 border-indigo-600 py-2">
-          {
-            //Edit to put create the topic you want to tweet about
-          }
           <input
             className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
             type="text"
